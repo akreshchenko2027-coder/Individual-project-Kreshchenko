@@ -1,8 +1,9 @@
-.cmake/
-CMakeLists.txt.user
-build*/
-*.pro.user
-.qmake.stash
-*.exe
-*.o
-*.obj
+**/build*/
+**/.cmake/
+**/CMakeLists.txt.user
+**/*.pro.user
+**/.qmake.stash
+**/*.exe
+**/*.o
+**/*.obj
+.DS_Store
