@@ -1,0 +1,8 @@
+.cmake/
+CMakeLists.txt.user
+build*/
+*.pro.user
+.qmake.stash
+*.exe
+*.o
+*.obj
