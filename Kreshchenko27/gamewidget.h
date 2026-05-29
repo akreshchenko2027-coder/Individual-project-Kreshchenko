@@ -27,6 +27,6 @@ private:
     bool isProcessing;
     int gamesPlayedInSession;
 
-    // Новий метод для налаштування дизайну кнопок
+
     void applyButtonStyle(QPushButton *btn, bool isMatched = false);
 };

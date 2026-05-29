@@ -3,7 +3,6 @@
 #include <QApplication>
 
 MainMenuWidget::MainMenuWidget(QWidget *parent) : QWidget(parent) {
-    // Налаштування красивого шрифту для всього екрану меню
     QFont defaultFont("Segoe UI", 11);
     this->setFont(defaultFont);
 

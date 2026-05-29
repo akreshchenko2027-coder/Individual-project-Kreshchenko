@@ -20,7 +20,7 @@ private:
     MainMenuWidget *m_menuWidget;
     GameWidget *m_gameWidget;
     StatsWidget *m_statsWidget;
-    GameRepository *m_repository; // Наш шар даних
+    GameRepository *m_repository;
 };
 
 #endif

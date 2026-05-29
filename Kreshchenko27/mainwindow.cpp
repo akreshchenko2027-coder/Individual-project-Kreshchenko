@@ -6,7 +6,6 @@
 #include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
-    // ШАР ДАНИХ: Ініціалізуємо сховище та читаємо попередній результат
     m_repository = new GameRepository("stats.json");
     m_repository->loadFromFile();
 
@@ -21,45 +20,40 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent) {
     m_stackedWidget->addWidget(m_gameWidget);
     m_stackedWidget->addWidget(m_statsWidget);
 
-    // НАВІГАЦІЯ ТА ЛОГІКА ІНТЕРФЕЙСУ
     connect(m_menuWidget, &MainMenuWidget::startRequested, [=]() {
         m_gameWidget->setupNewGame();
-        m_stackedWidget->setCurrentIndex(1); // Перехід на екран гри
+        m_stackedWidget->setCurrentIndex(1);
     });
 
     connect(m_menuWidget, &MainMenuWidget::statsRequested, [=]() {
-        // Оновлюємо лейбл значенням із репозиторію перед показом сторінки
         m_statsWidget->updateStats(m_repository->getTotalGamesPlayed());
-        m_stackedWidget->setCurrentIndex(2); // Перехід на екран статистики
+        m_stackedWidget->setCurrentIndex(2);
     });
 
     connect(m_statsWidget, &StatsWidget::menuRequested, [=]() {
-        m_stackedWidget->setCurrentIndex(0); // Назад до меню
+        m_stackedWidget->setCurrentIndex(0);
     });
 
-    // ШАР ДАНИХ: Очищення статистики у файлі
     connect(m_statsWidget, &StatsWidget::clearRequested, [=]() {
         m_repository->setTotalGamesPlayed(0);
-        m_repository->saveToFile(); // Скидаємо в JSON
+        m_repository->saveToFile();
         m_statsWidget->updateStats(0);
         QMessageBox::information(this, "Статистика", "Статистику успішно скинуто!");
     });
 
     connect(m_gameWidget, &GameWidget::menuRequested, [=]() {
-        m_stackedWidget->setCurrentIndex(0); // Назад до меню з гри
+        m_stackedWidget->setCurrentIndex(0);
     });
 
-    // ЗВ'ЯЗОК UI ТА ДАНИХ: Обробка виграшу
     connect(m_gameWidget, &GameWidget::gameFinished, [=]() {
         int currentCount = m_repository->getTotalGamesPlayed();
         m_repository->setTotalGamesPlayed(currentCount + 1);
-        m_repository->saveToFile(); // Записуємо нове значення в JSON
+        m_repository->saveToFile();
 
-        // Відразу оновлюємо екран статистики актуальним значенням
         m_statsWidget->updateStats(m_repository->getTotalGamesPlayed());
 
         QMessageBox::information(this, "Перемога!", "Вітаємо! Результат збережено в статистику.");
-        m_stackedWidget->setCurrentIndex(0); // Повертаємо користувача в меню
+        m_stackedWidget->setCurrentIndex(0);
     });
 
     resize(400, 500);
